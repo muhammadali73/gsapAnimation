@@ -24,13 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        var path = "M 10 100 Q 500 100 990 100";
         var finalPath = "M 10 100 Q 500 100 980 100";
 
         var string = document.querySelector("#string");
 
         string.addEventListener("mousemove", function (dets) {
-            path = `M 10 100 Q ${dets.x} ${dets.y} 990 100`;
+            var path = `M 10 100 Q ${dets.clientX} ${dets.clientY} 990 100`;
             gsap.to("svg path", {
                 attr: { d: path },
                 duration: .3,
@@ -47,4 +46,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     initAnimations();
+});
+
+var main = document.querySelector("body");
+var cursor = document.querySelector("#cursor");
+var buttonDiv = document.querySelector(".button");
+
+main.addEventListener("mousemove", function (dets) {
+    gsap.to(cursor, {
+        x: dets.x,
+        y: dets.y,
+        duration: .3,
+    })
+});
+
+
+buttonDiv.addEventListener("mouseenter",function(dets){
+    cursor.innerHTML = "clickz me!"
+    gsap.to(cursor,{
+        scale:2,
+        backgroundColor: "black"
+    })
+});
+buttonDiv.addEventListener("mouseleave",function(dets){
+    cursor.innerHTML = ""
+    gsap.to(cursor,{
+        scale:1,
+        backgroundColor: "white"
+    })
 });
